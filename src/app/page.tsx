@@ -3,42 +3,16 @@
 import { useState, FormEvent, useEffect } from 'react'
 import useMemoStore from '@/app/store/memoStore'
 
-export default function Home() {
-  const [isClient, setIsClient] = useState(false)
-  const [newMemo, setNewMemo] = useState('')
-  const [editingId, setEditingId] = useState<number | null>(null)
-  const { memos, addMemo, deleteMemo, editMemo } = useMemoStore()
 
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
+export default function Home() {
+  const [newMemo, setNewMemo] = useState('')
+  const { memos, addMemo, deleteMemo, toggleMemo } = useMemoStore()
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!newMemo.trim()) return
     addMemo(newMemo)
     setNewMemo('')
-  }
-
-  const handleEdit = (id: number, text: string) => {
-    setEditingId(id)
-    setNewMemo(text)
-  }
-
-  const handleSave = (id: number) => {
-    editMemo(id, newMemo)
-    setEditingId(null)
-    setNewMemo('')
-  }
-
-  const handleDelete = (id: number) => {
-    deleteMemo(id)
-    setEditingId(null)
-    setNewMemo('')
-  }
-
-  if (!isClient) {
-    return null // or a loading indicator
   }
 
   return (
@@ -64,41 +38,25 @@ export default function Home() {
           {memos.map((memo) => (
             <div 
               key={memo.id} 
-              className="bg-yellow-100 dark:bg-yellow-700 p-3 rounded-md"
+              className="flex justify-between items-center bg-yellow-100 dark:bg-yellow-700 p-3 rounded-md"
             >
-              {editingId === memo.id ? (
-                <div className="space-y-2">
-                  <textarea 
-                    value={newMemo}
-                    onChange={(e) => setNewMemo(e.target.value)}
-                    className="w-full p-2 rounded text-black dark:text-white dark:bg-gray-800"
-                  />
-                  <div className="flex justify-between">
-                    <button 
-                      onClick={() => handleSave(memo.id)}
-                      className="bg-green-500 text-white px-2 py-1 rounded"
-                    >
-                      Save
-                    </button>
-                    <button 
-                      onClick={() => handleDelete(memo.id)}
-                      className="bg-red-500 text-white px-2 py-1 rounded"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex justify-between items-center">
-                  <p className="text-gray-800 dark:text-gray-200">{memo.text}</p>
-                  <button 
-                    onClick={() => handleEdit(memo.id, memo.text)}
-                    className="text-blue-500"
-                  >
-                    Edit
-                  </button>
-                </div>
-              )}
+              <p className={`text-gray-800 dark:text-gray-200 ${memo.completed ? 'line-through' : ''}`}>
+                {memo.text}
+              </p>
+              <div>
+                <button 
+                  onClick={() => toggleMemo(memo.id)}
+                  className="text-blue-500 mr-2"
+                >
+                  Toggle
+                </button>
+                <button 
+                  onClick={() => deleteMemo(memo.id)}
+                  className="text-red-500"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
         </div>

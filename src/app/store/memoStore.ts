@@ -1,7 +1,20 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-const useMemoStore = create(
+interface Memo {
+  id: number;
+  text: string;
+  completed: boolean;
+}
+
+interface MemoStore {
+  memos: Memo[];
+  addMemo: (text: string) => void;
+  deleteMemo: (id: number) => void;
+  toggleMemo: (id: number) => void;
+}
+
+const useMemoStore = create<MemoStore>()(
   persist(
     (set) => ({
       memos: [],
@@ -11,20 +24,22 @@ const useMemoStore = create(
       deleteMemo: (id) => set((state) => ({
         memos: state.memos.filter(memo => memo.id !== id)
       })),
-      editMemo: (id, newText) => set((state) => ({
-        memos: state.memos.map(memo => 
-          memo.id === id ? { ...memo, text: newText } : memo
-        )
-      })),
       toggleMemo: (id) => set((state) => ({
         memos: state.memos.map(memo => 
           memo.id === id ? { ...memo, completed: !memo.completed } : memo
         )
-      }))
+      })),
     }),
     {
       name: 'memo-storage',
-      getStorage: () => localStorage,
+      storage: {
+        getItem: (name) => {
+          const str = localStorage.getItem(name);
+          return str ? JSON.parse(str) : null;
+        },
+        setItem: (name, value) => localStorage.setItem(name, JSON.stringify(value)),
+        removeItem: (name) => localStorage.removeItem(name),
+      },
     }
   )
 )
