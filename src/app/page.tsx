@@ -1,13 +1,18 @@
 "use client"
 
 import { useState, useRef, useEffect } from 'react'
-import useMemoStore from '@/app/store/memoStore'
+import useMemoStore from './store/memoStore'
 
 export default function Home() {
+  const [isClient, setIsClient] = useState(false)
   const [newMemo, setNewMemo] = useState('')
   const [editingId, setEditingId] = useState(null)
   const { memos, addMemo, deleteMemo, editMemo } = useMemoStore()
   const editRef = useRef(null)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -39,9 +44,13 @@ export default function Home() {
     }
   }, [editingId])
 
+  if (!isClient) {
+    return null // or a loading indicator
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <div className="max-w-md w-full space-y-8">
+    <main className="flex min-h-screen flex-col items-center p-4 sm:p-8">
+      <div className="w-full max-w-md space-y-8">
         <h1 className="text-4xl font-bold text-center mb-8">MemoApp</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input 
@@ -97,7 +106,6 @@ export default function Home() {
                     <p className="text-gray-800 dark:text-gray-200 truncate flex-grow">
                       {firstLine}
                     </p>
-                   {/* <span className="text-blue-500 text-xs ml-2">(Edit)</span> */}
                   </div>
                 )}
               </div>
