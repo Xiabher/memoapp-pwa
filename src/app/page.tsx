@@ -4,12 +4,14 @@ import { useState, useRef, useEffect, FormEvent } from 'react'
 import useMemoStore from '@/app/store/memoStore'
 import { Memo } from '@/types'
 
+
+
 export default function Home() {
   const [isClient, setIsClient] = useState(false)
   const [newMemo, setNewMemo] = useState('')
   const [editingId, setEditingId] = useState<number | null>(null)
   const { memos, addMemo, deleteMemo, editMemo } = useMemoStore()
-  const editRef = useRef<HTMLTextAreaElement>(null)
+  const editRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setIsClient(true)
@@ -77,7 +79,7 @@ export default function Home() {
               <div 
                 key={memo.id} 
                 className={`bg-yellow-100 dark:bg-yellow-700 p-3 rounded-md ${isEditing ? 'min-h-[50vh]' : 'cursor-pointer hover:bg-yellow-200 dark:hover:bg-yellow-600 transition-colors'}`}
-                ref={isEditing ? editRef : null}
+                ref={isEditing ? editRef : undefined}
                 onClick={() => !isEditing && handleEdit(memo.id, memo.text)}
               >
                 {isEditing ? (
