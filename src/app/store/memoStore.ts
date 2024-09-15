@@ -1,17 +1,14 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware'
+import { Memo } from '@/types';
 
-interface Memo {
-  id: number;
-  text: string;
-  completed: boolean;
-}
 
 interface MemoStore {
   memos: Memo[];
   addMemo: (text: string) => void;
   deleteMemo: (id: number) => void;
   toggleMemo: (id: number) => void;
+  editMemo: (id: number, newText: string) => void;
 }
 
 const useMemoStore = create<MemoStore>()(
@@ -19,27 +16,25 @@ const useMemoStore = create<MemoStore>()(
     (set) => ({
       memos: [],
       addMemo: (text) => set((state) => ({ 
-        memos: [...state.memos, { id: Date.now(), text, completed: false }] 
+        memos: [{ id: Date.now(), text, completed: false }, ...state.memos ] 
       })),
       deleteMemo: (id) => set((state) => ({
         memos: state.memos.filter(memo => memo.id !== id)
+      })),
+      editMemo: (id, newText) => set((state) => ({
+        memos: state.memos.map(memo => 
+          memo.id === id ? { ...memo, text: newText } : memo
+        )
       })),
       toggleMemo: (id) => set((state) => ({
         memos: state.memos.map(memo => 
           memo.id === id ? { ...memo, completed: !memo.completed } : memo
         )
-      })),
+      }))
     }),
     {
       name: 'memo-storage',
-      storage: {
-        getItem: (name) => {
-          const str = localStorage.getItem(name);
-          return str ? JSON.parse(str) : null;
-        },
-        setItem: (name, value) => localStorage.setItem(name, JSON.stringify(value)),
-        removeItem: (name) => localStorage.removeItem(name),
-      },
+      storage: createJSONStorage(() => localStorage),
     }
   )
 )
