@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-4 sm:p-8">
       <div className="w-full max-w-md space-y-8">
-        <h1 className="text-4xl font-bold text-center mb-8">MemoApp</h1>
+        <h1 className="text-4xl font-bold text-center mb-8">Memo App</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input 
             type="text" 

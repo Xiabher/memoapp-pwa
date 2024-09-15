@@ -16,7 +16,7 @@ const useMemoStore = create<MemoStore>()(
     (set) => ({
       memos: [],
       addMemo: (text) => set((state) => ({ 
-        memos: [...state.memos, { id: Date.now(), text, completed: false }] 
+        memos: [{ id: Date.now(), text, completed: false }, ...state.memos ] 
       })),
       deleteMemo: (id) => set((state) => ({
         memos: state.memos.filter(memo => memo.id !== id)
