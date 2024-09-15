@@ -1,7 +1,17 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { Memo } from '@/types';
 
-const useMemoStore = create(
+
+interface MemoStore {
+  memos: Memo[];
+  addMemo: (text: string) => void;
+  deleteMemo: (id: number) => void;
+  toggleMemo: (id: number) => void;
+  editMemo: (id: number, newText: string) => void;
+}
+
+const useMemoStore = create<MemoStore>()(
   persist(
     (set) => ({
       memos: [],
