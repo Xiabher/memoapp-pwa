@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware'
 import { Memo } from '@/types';
 
 
@@ -34,7 +34,7 @@ const useMemoStore = create<MemoStore>()(
     }),
     {
       name: 'memo-storage',
-      getStorage: () => localStorage,
+      storage: createJSONStorage(() => localStorage),
     }
   )
 )
