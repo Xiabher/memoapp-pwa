@@ -4,13 +4,11 @@ import { useState, useRef, useEffect, FormEvent } from 'react'
 import useMemoStore from '@/app/store/memoStore'
 import { Memo } from '@/types'
 
-
-
 export default function Home() {
   const [isClient, setIsClient] = useState(false)
   const [newMemo, setNewMemo] = useState('')
   const [editingId, setEditingId] = useState<number | null>(null)
-  const { memos, addMemo, deleteMemo, editMemo } = useMemoStore()
+  const { memos, addMemo, deleteMemo, editMemo, toggleMemo } = useMemoStore()
   const editRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -39,6 +37,10 @@ export default function Home() {
     deleteMemo(id)
     setEditingId(null)
     setNewMemo('')
+  }
+
+  const handleToggle = (id: number) => {
+    toggleMemo(id)
   }
 
   useEffect(() => {
@@ -87,7 +89,7 @@ export default function Home() {
                     <textarea 
                       value={newMemo}
                       onChange={(e) => setNewMemo(e.target.value)}
-                      className="w-full p-2 rounded text-black dark:text-white dark:bg-gray-800 min-h-[40vh]"
+                      className={`w-full p-2 rounded text-black dark:text-white dark:bg-gray-800 min-h-[40vh] ${memo.completed ? 'line-through' : ''}`}
                     />
                     <div className="flex justify-between items-center">
                       <button 
@@ -95,6 +97,12 @@ export default function Home() {
                         className="bg-green-500 text-white px-4 py-2 rounded"
                       >
                         Save
+                      </button>
+                      <button 
+                        onClick={() => handleToggle(memo.id)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                      >
+                        {memo.completed ? 'Mark Incomplete' : '(In)Complete'}
                       </button>
                       <button 
                         onClick={() => handleDelete(memo.id)}
@@ -106,7 +114,7 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="flex justify-between items-center">
-                    <p className="text-gray-800 dark:text-gray-200 truncate flex-grow">
+                    <p className={`text-gray-800 dark:text-gray-200 truncate flex-grow ${memo.completed ? 'line-through' : ''}`}>
                       {firstLine}
                     </p>
                   </div>
