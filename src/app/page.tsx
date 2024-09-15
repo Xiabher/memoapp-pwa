@@ -4,11 +4,17 @@ import { useState, useRef, useEffect, FormEvent } from 'react'
 import useMemoStore from '@/app/store/memoStore'
 import { Memo } from '@/types'
 
+
+
+
 export default function Home() {
+  const { memos, addMemo, deleteMemo, editMemo, toggleMemo } = useMemoStore()
   const [isClient, setIsClient] = useState(false)
   const [newMemo, setNewMemo] = useState('')
   const [editingId, setEditingId] = useState<number | null>(null)
-  const { memos, addMemo, deleteMemo, editMemo, toggleMemo } = useMemoStore()
+
+
+
   const editRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
