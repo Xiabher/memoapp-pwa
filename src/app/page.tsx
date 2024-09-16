@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, FormEvent } from 'react'
 import useMemoStore from '@/app/store/memoStore'
-import { Memo } from '@/types'
+import { Memo } from 'src/types'
 
 export default function Home() {
   const [isClient, setIsClient] = useState(false)

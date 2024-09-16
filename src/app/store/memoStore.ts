@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import { Memo } from '@/types';
+import { Memo } from 'src/types'
 
 
 interface MemoStore {
