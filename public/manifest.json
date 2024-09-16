@@ -1,7 +1,7 @@
 {
-    "name": "MemoApp PWA",
-    "short_name": "MemoApp",
-    "description": "A simple memo application",
+    "name": "notaBene",
+    "short_name": "Memo App",
+    "description": "A simple memo to do task list application",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
