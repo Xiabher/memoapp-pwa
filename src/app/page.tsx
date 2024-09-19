@@ -9,7 +9,8 @@ export default function Home() {
   const [newMemo, setNewMemo] = useState('')
   const [editingId, setEditingId] = useState<number | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const { memos, addMemo, deleteMemo, editMemo, toggleMemo, searchMemos, sortMemosByDate } = useMemoStore()
+  const [filterCategory, setFilterCategory] = useState('all')
+  const { memos, addMemo, deleteMemo, editMemo, toggleMemo, searchMemos, filterMemosByCategory } = useMemoStore()
   const editRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -19,7 +20,7 @@ export default function Home() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!newMemo.trim()) return
-    addMemo(newMemo)
+    addMemo(newMemo, filterCategory)
     setNewMemo('')
   }
 
@@ -50,7 +51,13 @@ export default function Home() {
     }
   }, [editingId])
 
-  const filteredMemos = searchQuery ? searchMemos(searchQuery) : sortMemosByDate(false)
+  const filteredMemos = searchQuery 
+    ? searchMemos(searchQuery) 
+    : filterCategory !== 'all' 
+      ? filterMemosByCategory(filterCategory) 
+      : memos
+
+  const sortedFilteredMemos = [...filteredMemos].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 
   if (!isClient) {
     return null // or a loading indicator
@@ -68,6 +75,16 @@ export default function Home() {
             placeholder="Enter a memo" 
             className="w-full border p-2 rounded text-black dark:text-white dark:bg-gray-800"
           />
+          <select
+            value={filterCategory}
+            onChange={(e) => setFilterCategory(e.target.value)}
+            className="w-full border p-2 rounded text-black dark:text-white dark:bg-gray-800"
+          >
+            <option value="all">All Categories</option>
+            <option value="personal">Personal</option>
+            <option value="work">Work</option>
+            <option value="social">Social</option>
+          </select>
           <button 
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
@@ -83,7 +100,7 @@ export default function Home() {
           className="w-full border p-2 rounded text-black dark:text-white dark:bg-gray-800"
         />
         <div className="space-y-2">
-          {filteredMemos.map((memo: Memo) => {
+          {sortedFilteredMemos.map((memo: Memo) => {
             const firstLine = memo.text.split('\n')[0];
             const isEditing = editingId === memo.id;
 
@@ -127,6 +144,7 @@ export default function Home() {
                     <p className={`text-gray-800 dark:text-gray-200 truncate flex-grow ${memo.completed ? 'line-through' : ''}`}>
                       {firstLine}
                     </p>
+                    <span className="text-sm text-gray-500 ml-2">{memo.category}</span>
                   </div>
                 )}
               </div>
