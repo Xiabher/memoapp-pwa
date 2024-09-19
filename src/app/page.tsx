@@ -8,7 +8,8 @@ export default function Home() {
   const [isClient, setIsClient] = useState(false)
   const [newMemo, setNewMemo] = useState('')
   const [editingId, setEditingId] = useState<number | null>(null)
-  const { memos, addMemo, deleteMemo, editMemo, toggleMemo } = useMemoStore()
+  const [searchQuery, setSearchQuery] = useState('')
+  const { memos, addMemo, deleteMemo, editMemo, toggleMemo, searchMemos, sortMemosByDate } = useMemoStore()
   const editRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -49,6 +50,8 @@ export default function Home() {
     }
   }, [editingId])
 
+  const filteredMemos = searchQuery ? searchMemos(searchQuery) : sortMemosByDate(false)
+
   if (!isClient) {
     return null // or a loading indicator
   }
@@ -72,8 +75,15 @@ export default function Home() {
             Add Memo
           </button>
         </form>
+        <input 
+          type="text" 
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search memos" 
+          className="w-full border p-2 rounded text-black dark:text-white dark:bg-gray-800"
+        />
         <div className="space-y-2">
-          {memos.map((memo: Memo) => {
+          {filteredMemos.map((memo: Memo) => {
             const firstLine = memo.text.split('\n')[0];
             const isEditing = editingId === memo.id;
 
