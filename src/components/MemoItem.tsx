@@ -29,7 +29,7 @@ export default function MemoItem({ memo }: MemoItemProps) {
 
   return (
     <div 
-      className={`bg-white p-3 rounded-md shadow ${isEditing ? 'min-h-[50vh]' : 'cursor-pointer hover:bg-gray-50 transition-colors'}`}
+      className={`bg-white p-3 rounded-md shadow ${isEditing ? 'min-h-[25vh]' : 'cursor-pointer hover:bg-gray-50 transition-colors'}`}
       onClick={() => !isEditing && setIsEditing(true)}
     >
       {isEditing ? (
