@@ -65,44 +65,16 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-4 sm:p-8">
-      <div className="w-full min-w-full space-y-8">
-        <h1 className="text-4xl font-bold text-center mb-8">noteApp</h1>
+      <div className="w-full max-w-4xl space-y-8">
+        <h1 className="text-2xl font-bold text-center mb-4">noteApp</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-         {/*
-          <input 
-            type="text" 
+          <textarea 
             value={newMemo}
             onChange={(e) => setNewMemo(e.target.value)}
             placeholder="Enter a memo" 
-            className="w-full border p-2 rounded text-black dark:text-white dark:bg-gray-800"
-            style={{ minHeight: '100px' }} // Adjust the value as needed
+            className="text-lg font-semibold w-full h-64 border p-4 rounded text-black dark:text-blue-800 bg-yellow-200 dark:bg-yellow-600 dark:text-white resize-none"
+            style={{ minHeight: '33vh' }}
           />
-
-          */}
-<textarea 
-
-  value={newMemo}
-  onChange={(e) => setNewMemo(e.target.value)}
-  placeholder="Enter a memo" 
-  className=" text-lg font-semibold w-full h-32 border p-4 rounded text-black dark:text-blue-800 bg-yellow-800 dark:bg-yellow-200 dark:text-white resize"
-  style={{ textAlign: 'left' }} // Align text to the right
-/>
-
-{/* className="w-full  border p-4 rounded text-black bg-yellow-200 dark:bg-yellow-600 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize overflow-hidden"*/}
-  
-
-
-
-          <select
-            value={filterCategory}
-            onChange={(e) => setFilterCategory(e.target.value)}
-            className="w-full border p-2 rounded text-black dark:text-white dark:bg-gray-800"
-          >
-            <option value="all">All Categories</option>
-            <option value="personal">Personal</option>
-            <option value="work">Work</option>
-            <option value="social">Social</option>
-          </select>
           <button 
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
@@ -110,13 +82,25 @@ export default function Home() {
             Add Memo
           </button>
         </form>
-        <input 
-          type="text" 
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search memos" 
-          className="w-full border p-2 rounded text-black dark:text-white dark:bg-gray-800"
-        />
+        <div className="flex justify-between items-center">
+          <select
+            value={filterCategory}
+            onChange={(e) => setFilterCategory(e.target.value)}
+            className="w-1/3 border p-2 rounded text-black dark:text-white dark:bg-gray-800"
+          >
+            <option value="all">All Categories</option>
+            <option value="personal">Personal</option>
+            <option value="work">Work</option>
+            <option value="social">Social</option>
+          </select>
+          <input 
+            type="text" 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search memos" 
+            className="w-1/3 border p-2 rounded text-black dark:text-white dark:bg-gray-800"
+          />
+        </div>
         <div className="space-y-2">
           {sortedFilteredMemos.map((memo: Memo) => {
             const firstLine = memo.text.split('\n')[0];
