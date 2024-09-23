@@ -20,8 +20,8 @@ export default function MemoForm() {
         value={newMemo}
         onChange={(e) => setNewMemo(e.target.value)}
         placeholder="Enter a memo" 
-        className="text-lg font-semibold w-full h-64 border p-4 rounded text-gray-800 bg-white resize-none"
-        style={{ minHeight: '33vh' }}
+        className="text-lg font-semibold w-full h-48 border p-4 rounded text-gray-800 bg-white resize-none"
+        style={{ minHeight: '25vh' }}
       />
       <button 
         type="submit"
