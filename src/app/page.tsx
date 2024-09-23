@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-4 sm:p-8 bg-yellow-100">
       <div className="w-full max-w-4xl space-y-8">
-        <h1 className="text-2xl font-bold text-center mb-4 text-gray-800">Hi Adam & Isak</h1>
+        <h1 className="text-2xl font-bold text-center mb-4 text-gray-800">Hi Adam Isak</h1>
         <MemoForm />
         <SearchAndFilter 
           searchQuery={searchQuery}
