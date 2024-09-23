@@ -29,7 +29,7 @@ export default function SearchAndFilter({
         type="text" 
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Search memos" 
+        placeholder="Search ...." 
         className="w-1/3 border p-2 rounded text-gray-800 bg-white"
       />
     </div>

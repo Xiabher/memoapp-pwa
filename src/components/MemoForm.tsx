@@ -19,7 +19,7 @@ export default function MemoForm() {
       <textarea 
         value={newMemo}
         onChange={(e) => setNewMemo(e.target.value)}
-        placeholder="Enter a memo" 
+        placeholder="Write your memo here ...." 
         className="text-lg font-semibold w-full h-48 border p-4 rounded text-gray-800 bg-white resize-none"
         style={{ minHeight: '25vh' }}
       />
