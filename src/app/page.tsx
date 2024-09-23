@@ -64,20 +64,20 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-4 sm:p-8">
+    <main className="flex min-h-screen flex-col items-center p-4 sm:p-8 bg-yellow-100">
       <div className="w-full max-w-4xl space-y-8">
-        <h1 className="text-2xl font-bold text-center mb-4">noteApp</h1>
+        <h1 className="text-2xl font-bold text-center mb-4 text-gray-800">noteApp</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <textarea 
             value={newMemo}
             onChange={(e) => setNewMemo(e.target.value)}
             placeholder="Enter a memo" 
-            className="text-lg font-semibold w-full h-64 border p-4 rounded text-black dark:text-blue-800 bg-yellow-200 dark:bg-yellow-600 dark:text-white resize-none"
+            className="text-lg font-semibold w-full h-64 border p-4 rounded text-gray-800 bg-white resize-none"
             style={{ minHeight: '33vh' }}
           />
           <button 
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
+            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-800 transition-colors"
           >
             Add Memo
           </button>
@@ -86,7 +86,7 @@ export default function Home() {
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className="w-1/3 border p-2 rounded text-black dark:text-white dark:bg-gray-800"
+            className="w-1/3 border p-2 rounded text-gray-800 bg-white"
           >
             <option value="all">All Categories</option>
             <option value="personal">Personal</option>
@@ -98,7 +98,7 @@ export default function Home() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search memos" 
-            className="w-1/3 border p-2 rounded text-black dark:text-white dark:bg-gray-800"
+            className="w-1/3 border p-2 rounded text-gray-800 bg-white"
           />
         </div>
         <div className="space-y-2">
@@ -109,7 +109,7 @@ export default function Home() {
             return (
               <div 
                 key={memo.id} 
-                className={`bg-yellow-100 dark:bg-yellow-700 p-3 rounded-md ${isEditing ? 'min-h-[50vh]' : 'cursor-pointer hover:bg-yellow-200 dark:hover:bg-yellow-600 transition-colors'}`}
+                className={`bg-white p-3 rounded-md shadow ${isEditing ? 'min-h-[50vh]' : 'cursor-pointer hover:bg-gray-50 transition-colors'}`}
                 ref={isEditing ? editRef : undefined}
                 onClick={() => !isEditing && handleEdit(memo.id, memo.text)}
               >
@@ -118,24 +118,24 @@ export default function Home() {
                     <textarea 
                       value={newMemo}
                       onChange={(e) => setNewMemo(e.target.value)}
-                      className={`w-full p-2 rounded text-black dark:text-white dark:bg-gray-800 min-h-[40vh] ${memo.completed ? 'line-through' : ''}`}
+                      className={`w-full p-2 rounded text-gray-800 bg-white min-h-[40vh] ${memo.completed ? 'line-through' : ''}`}
                     />
                     <div className="flex justify-between items-center">
                       <button 
                         onClick={() => handleSave(memo.id)}
-                        className="bg-green-500 text-white px-4 py-2 rounded"
+                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
                       >
                         Save
                       </button>
                       <button 
                         onClick={() => handleToggle(memo.id)}
-                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                       >
                         {memo.completed ? 'Mark Incomplete' : '(In)Complete'}
                       </button>
                       <button 
                         onClick={() => handleDelete(memo.id)}
-                        className="bg-red-500 text-white px-4 py-2 rounded"
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                       >
                         Delete
                       </button>
@@ -143,7 +143,7 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="flex justify-between items-center">
-                    <p className={`text-gray-800 dark:text-gray-200 truncate flex-grow ${memo.completed ? 'line-through' : ''}`}>
+                    <p className={`text-gray-800 truncate flex-grow ${memo.completed ? 'line-through' : ''}`}>
                       {firstLine}
                     </p>
                     <span className="text-sm text-gray-500 ml-2">{memo.category}</span>
