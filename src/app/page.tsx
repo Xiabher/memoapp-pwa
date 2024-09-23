@@ -65,16 +65,34 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-4 sm:p-8">
-      <div className="w-full max-w-md space-y-8">
-        <h1 className="text-4xl font-bold text-center mb-8">Memo App</h1>
+      <div className="w-full min-w-full space-y-8">
+        <h1 className="text-4xl font-bold text-center mb-8">noteApp</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
+         {/*
           <input 
             type="text" 
             value={newMemo}
             onChange={(e) => setNewMemo(e.target.value)}
             placeholder="Enter a memo" 
             className="w-full border p-2 rounded text-black dark:text-white dark:bg-gray-800"
+            style={{ minHeight: '100px' }} // Adjust the value as needed
           />
+
+          */}
+<textarea 
+
+  value={newMemo}
+  onChange={(e) => setNewMemo(e.target.value)}
+  placeholder="Enter a memo" 
+  className=" text-lg font-semibold w-full h-32 border p-4 rounded text-black dark:text-blue-800 bg-yellow-800 dark:bg-yellow-200 dark:text-white resize"
+  style={{ textAlign: 'left' }} // Align text to the right
+/>
+
+{/* className="w-full  border p-4 rounded text-black bg-yellow-200 dark:bg-yellow-600 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize overflow-hidden"*/}
+  
+
+
+
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
