@@ -16,6 +16,8 @@ export default function SearchAndFilter({
   return (
     <div className="flex justify-between items-center">
       <select
+        id="categoryFilter"
+        name="categoryFilter"
         value={filterCategory}
         onChange={(e) => setFilterCategory(e.target.value)}
         className="w-1/3 border p-2 rounded text-gray-800 bg-white"
@@ -26,6 +28,8 @@ export default function SearchAndFilter({
         <option value="social">Social</option>
       </select>
       <input 
+        id="searchInput"
+        name="searchInput"
         type="text" 
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
