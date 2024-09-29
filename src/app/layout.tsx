@@ -40,10 +40,18 @@ export default function RootLayout({
     return (
         <html lang="en">
             <Head>
-                <title>{metadata.title}</title>
+                <title>{(metadata.title as string) || "Default Title"}</title>
                 <meta name="description" content={metadata.description || ""} />
-                <link rel="manifest" href={metadata.manifest || ""} />
-                <meta name="theme-color" content={metadata.themeColor || "#000000"} />
+                <link
+                    rel="manifest"
+                    href={
+                        typeof metadata.manifest === "string" ? metadata.manifest : metadata.manifest?.toString() || ""
+                    }
+                />
+                {/* <meta 
+                    name="theme-color" 
+                    content={typeof metadata.themeColor === 'string' ? metadata.themeColor : "#000000"} 
+                /> */}
             </Head>
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
         </html>
